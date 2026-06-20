@@ -1,175 +1,233 @@
-# Adviance — Full-Stack Hackathon MVP
+# Adviance
 
-This project combines the approved **React frontend** with a **Node.js + Express backend** and secure **Gemini API** integration.
+## Human Expertise Powered by AI
 
-It keeps the original Adviance palette and top navigation. The backend provides persistent Client Memory using a file-backed JSON store for the hackathon demo. On first run it creates `backend/data/database.json` from `backend/data/seed.json`.
+## Project Description
 
-## Three working features for the demo
+Adviance is a connected advisory workspace built around one central idea: **Client Memory**.
 
-1. **AI partner matching**
-   - The advisor selects a client and a pre-approved need category.
-   - Gemini receives only the saved client context and authorised partners in that selected category.
-   - The response is validated before display, so the UI cannot show a partner outside the authorised directory.
-   - Gemini also drafts an introduction message for the advisor to review.
+Every client has one persistent profile containing meeting notes, follow-ups, life events, referral history, and previous interactions. This information is stored in the backend database and becomes the shared source for Learning Hub, Partner Finder, and Growth Dashboard.
 
-2. **AI course recommendation**
-   - Gemini reads Client Memory and the advisor's complete/incomplete CPD list.
-   - It must recommend one item from the pre-approved course library only.
-   - The backend validates the returned course ID before displaying it.
-
-3. **Meeting notes + Client Memory**
-   - Advisors add notes through the client detail screen.
-   - Notes save persistently through the backend to the client timeline.
-   - **Organise with Gemini** turns rough notes into a reviewable summary, client concerns, and action items.
-   - The advisor decides whether to save the original note; the AI never silently changes Client Memory.
-
-Extra AI endpoints are included for **pre-meeting briefs** and **Ask Adviance**.
+Adviance helps advisors organise client information, complete relevant CPD learning, find authorised specialist partners, and understand transparent growth indicators in one platform.
 
 ---
 
-## Before you run it
+## Team Name
 
-You need:
+**Team LogicLords**
 
-- Node.js 18 or newer
-- A Gemini API key from Google AI Studio
+## Team Members
 
-Do **not** paste your real API key into GitHub, React files, screenshots, or chat messages.
+| Name                     | Role     |
+| ------------------------ | -------- |
+| Jeevika Akshaya          | Frontend |
+| Shahriar Kabir Chowdhury | Backend  |
+| Khan Rubayet Islam       | Frontend |
+| Fariya                   | Pitching |
+| Nikhil                   | Backend  |
 
 ---
 
-## Run locally — easiest method
+## Challenge
 
-### 1. Open Terminal in the project folder
+Financial advisors often use separate systems for client records, meeting notes, CPD learning, schedules, and specialist referrals.
+
+For example:
+
+* A CRM stores client information.
+* A calendar manages meetings.
+* A learning platform provides CPD courses.
+* A spreadsheet or personal contacts list stores partner referrals.
+
+The problem is that these systems do not share context with each other. Advisors must manually remember what happened in client conversations, decide what knowledge they need next, and search for the right authorised partner.
+
+---
+
+## Our Approach
+
+Adviance solves this fragmentation through **Client Memory**.
+
+Client Memory is the persistent client profile that stores meeting notes, follow-ups, life events, meeting history, and referral records.
+
+This one source then supports three connected outcomes:
+
+### 1. Client Memory Dashboard
+
+* Client profiles and meeting history
+* Follow-up and schedule tracking
+* Expense logging
+* Gemini-assisted meeting note organisation
+* Advisor-controlled review before saving AI output
+
+### 2. Learning Hub
+
+* CPD progress tracking toward the 35-hour yearly target
+* Approved CPD course library
+* AI course recommendations based on:
+
+  * Client needs recorded in Client Memory
+  * Completed courses
+  * Advisor specialisation gaps
+* Pre-meeting preparation brief
+
+### 3. Partner Finder
+
+* Authorised partner directory
+* Need categories including tax, estate planning, Takaful, retirement, and business succession
+* AI-supported partner matching
+* AI-generated introduction-message draft
+* Referral outcomes: Pending, Successful, or No Response
+
+### 4. Growth Dashboard
+
+* Client Engagement
+* Deadline Reliability
+* Partner Activity
+* Practice Score
+
+All Growth Dashboard indicators are transparent and based on visible advisor activity. They are not hidden AI scores.
+
+---
+
+## Why Adviance Is Different
+
+CRMs store client records. Learning platforms store courses. Partner directories store contacts.
+
+Adviance connects all three through one Client Memory.
+
+A saved client conversation can help the advisor:
+
+1. Prepare for the next meeting
+2. Identify a relevant approved CPD course
+3. Find an authorised specialist partner
+
+Adviance is not another generic chatbot or separate CRM. It is a connected decision-support layer for advisory work.
+
+---
+
+## Technologies Used
+
+### Frontend
+
+* React
+* Vite
+* HTML
+* CSS
+* JavaScript
+
+### Backend
+
+* Node.js
+* Express.js
+* REST API
+
+### Artificial Intelligence
+
+* Google Gemini API
+
+### Data Storage
+
+* Local JSON database for MVP demonstration
+
+### Security and Access
+
+* Login and registration
+* Environment variables using `.env`
+* Gemini API key stored only in backend environment configuration
+* Authorised partner and approved-course constraints
+* Advisor review before acting on AI output
+
+---
+
+## AI Safety and Responsible Use
+
+Gemini is used only as a support tool for:
+
+* Organising rough meeting notes
+* Suggesting possible follow-up actions
+* Recommending courses from an approved CPD library
+* Matching only from authorised partners
+* Drafting introduction messages
+
+Gemini does not provide investment advice, make financial decisions, automatically send messages, or overwrite client records.
+
+The advisor reviews every AI-generated result before saving or acting on it.
+
+---
+
+## How to Run the Project Locally
+
+### 1. Clone the repository
 
 ```bash
-cd Adviance_Fullstack
+git clone https://github.com/Shahriar-101/Adviance-Team-LogicLords-ImagineHack-2026.git
 ```
 
-### 2. Install all frontend and backend packages
+### 2. Open the project folder
+
+```bash
+cd Adviance-Team-LogicLords-ImagineHack-2026
+```
+
+### 3. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Create your private backend environment file
+### 4. Add environment variables
 
-On macOS/Linux:
+Inside the `backend` folder, create a file named:
 
-```bash
-cp backend/.env.example backend/.env
+```text
+.env
 ```
 
-Then open `backend/.env` and replace only this value:
+Use `backend/.env.example` as a guide.
+
+Add your own Gemini API key:
 
 ```env
-GEMINI_API_KEY=replace_with_your_gemini_key
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-2.5-flash
+PORT=4000
+CORS_ORIGIN=http://localhost:5173
 ```
 
-Keep the key private. You may leave `GEMINI_MODEL=gemini-2.5-flash` as it is. If Google AI Studio says that model is not available for your key, change it to a model available in your account.
-
-### 4. Start frontend and backend together
+### 5. Start the application
 
 ```bash
 npm run dev
 ```
 
-You should see two local URLs:
-
-- React frontend: `http://localhost:5173`
-- Node.js backend: `http://localhost:4000`
-
-Open `http://localhost:5173` in Chrome.
-
-**Demo login**
+Then open the local address shown in the Terminal, usually:
 
 ```text
-Email: ahmad@adviance.demo
-Password: adviance2026
+http://localhost:5173
 ```
 
 ---
 
-## What to click in the app
+## Screenshots and Demo
+## Screenshots and Demo
 
-### AI course recommendation
-
-`Learning Hub` → `Generate AI recommendation`
-
-### Pre-meeting brief
-
-`Learning Hub` → choose a client → `Generate preparation brief`
-
-### AI partner matching
-
-`Partner Finder` → choose client and category → `Find authorised match`
-
-### Meeting note saving and AI organisation
-
-`Dashboard` → click a client → write a note → `Organise with Gemini` → review → `Save note to Client Memory`
-
----
-
-## Backend API routes
-
-| Route | Purpose |
-|---|---|
-| `GET /api/health` | Confirms backend status and whether Gemini is configured |
-| `GET /api/state` | Loads all demo Client Memory data |
-| `PUT /api/state` | Saves frontend changes persistently |
-| `POST /api/clients/:clientId/notes` | Saves a client note to Client Memory |
-| `POST /api/ai/course-recommendation` | Returns one approved CPD recommendation |
-| `POST /api/ai/partner-match` | Returns authorised partner matches + introduction draft |
-| `POST /api/ai/pre-meeting-brief` | Returns a client-specific preparation brief |
-| `POST /api/ai/organize-meeting-notes` | Organises rough meeting notes |
-| `POST /api/ai/learning-question` | Answers a learning question using course context |
-
----
-
-## Important architecture explanation for judges
-
-> Adviance does not use Gemini as memory. Client records, notes, meetings, courses, partners, and referrals are stored by our backend. Gemini is the reasoning layer: it receives only the relevant saved context when an advisor requests a recommendation, match, brief, or note organisation.
-
----
-
-## Current MVP data storage
-
-The hackathon version uses `backend/data/database.json`, which is created locally and persists while the backend is running on your computer. This is intentionally simple so the whole team can run the project without creating a cloud database account.
-
-For production, replace the file store in `backend/data/store.js` with MongoDB Atlas, Firebase, PostgreSQL, or another managed database, and add real authentication and role-based access control.
-
----
-
-## GitHub safety
-
-The root `.gitignore` already ignores:
-
-```text
-backend/.env
-backend/data/database.json
-node_modules/
-```
-
-Before pushing to GitHub, run:
-
-```bash
-git status
-```
-
-Make sure `backend/.env` is **not** listed.
-
----
-
-## Build check
-
-Use this before submission:
-
-```bash
-npm run check
-```
-
-It checks the backend JavaScript and builds the React frontend.
+### Dashboard and Client Memory
+![Dashboard and Client Memory](Screenshots/dashboard.png)
 
 
-## Gemini blank-screen fix
-This build fixes the `Organise with Gemini` blank-screen issue by using Gemini's current structured-output settings (`responseMimeType` and `responseJsonSchema`) and by validating/normalising the meeting-note result before React renders it. After replacing an older build, run `npm install` and restart with `npm run dev`.
+### Learning Hub
+![Learning Hub Course Recommendation](Screenshots/learning-hub.png)
+
+### Partner Finder
+![Partner Finder Match](Screenshots/partner-finder.png)
+
+### Growth Dashboard
+![Growth Dashboard](Screenshots/growth.png)
+
+## Demo Video
+
+link: https://youtu.be/xdRJPid1maQ?si=8RJLN3CCOOmM_pIv
+
+## AI Assistance Disclosure
+
+AI tools were used to support development and documentation. Team LogicLords designed, reviewed, tested, integrated, and validated the final project.
